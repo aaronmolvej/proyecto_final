@@ -1,0 +1,9 @@
+# Ignorar compilados y objetos
+build/
+*.o
+
+# Ignorar configuraciones de editor
+.vscode/
+
+# Ignorar archivos temporales
+*.swp
