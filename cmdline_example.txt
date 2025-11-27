@@ -1,0 +1,1 @@
+console=serial0,115200 console=tty3 root=PARTUUID=abf4dc22-02 rootfstype=ext4 fsck.repair=yes rootwait quiet splash plymouth.ignore-serial-consoles logo.nologo vt.global_cursor_default=0 loglevel=0 systemd.show_status=false

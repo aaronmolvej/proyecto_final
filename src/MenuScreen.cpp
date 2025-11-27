@@ -524,6 +524,14 @@ void MenuScreen::updateButtonStates() {
 }
 
 void MenuScreen::handleInput(InputManager& input) {
+    if (input.isGamepadButtonPressed(SDL_CONTROLLER_BUTTON_LEFTSTICK) && 
+        input.isGamepadButtonPressed(SDL_CONTROLLER_BUTTON_RIGHTSTICK)) {
+        
+        std::cout << "Combo L3+R3 detectado: Apagando..." << std::endl;
+        int res = std::system("sudo poweroff");
+        (void)res;
+        exit(0);
+    }
     if (input.isGamepadButtonPressed(SDL_CONTROLLER_BUTTON_LEFTSHOULDER)) {
          if (currentTab == Tab::FAVORITOS) tabButtons[0]->click();
          else if (currentTab == Tab::ROMS) tabButtons[1]->click();

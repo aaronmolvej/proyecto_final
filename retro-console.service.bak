@@ -1,0 +1,30 @@
+[Unit]
+Description=Consola Retro
+After=local-fs.target
+Conflicts=getty@tty1.service plymouth-quit.service
+
+[Service]
+User=pi
+Group=pi
+Type=simple
+
+Environment=SDL_VIDEODRIVER=kmsdrm
+Environment=HOME=/home/pi
+ExecStartPre=/bin/sleep 15
+
+ExecStartPre=-/usr/bin/plymouth deactivate
+ExecStartPre=-/usr/bin/plymouth quit
+
+ExecStart=/home/pi/proyecto_final/launcher.sh
+
+StandardInput=tty
+StandardOutput=null
+TTYPath=/dev/tty1
+#TTYReset=yes
+#TTYVHangup=yes
+
+Restart=always
+RestartSec=2
+
+[Install]
+WantedBy=multi-user.target
