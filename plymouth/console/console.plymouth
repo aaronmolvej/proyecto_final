@@ -1,0 +1,8 @@
+[Plymouth Theme]
+Name=Console
+Description=Tema Retro BrigadaMMP
+ModuleName=script
+
+[script]
+ImageDir=/usr/share/plymouth/themes/console
+ScriptFile=/usr/share/plymouth/themes/console/console.script
