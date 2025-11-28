@@ -117,6 +117,23 @@ else
     echo "      Recuerda copiarlo manualmente a: $MEDNAFEN_DIR/"
 fi
 
+# ...
+
+# 9.CONFIGURACION DE EMULADOR (GOLDEN MASTER)
+echo ">>> [8/8] Inyectando configuracion de controles (Mednafen)..."
+
+mkdir -p /home/$SUDO_USER/.mednafen
+
+if [ -f "config/mednafen.cfg" ]; then
+    cp config/mednafen.cfg /home/$SUDO_USER/.mednafen/mednafen.cfg
+
+    # Asegurar permisos para el usuario (no root)
+    chown -R $SUDO_USER:$SUDO_USER /home/$SUDO_USER/.mednafen
+    echo "   -> Configuración de controles instalada."
+else
+    echo "   ADVERTENCIA: No se encontró config/mednafen.cfg"
+fi
+
 
 # 8. CREAR CARPETAS DE DATOS
 #mkdir -p roms/nes roms/snes roms/gba data
@@ -125,5 +142,5 @@ sudo chown -R $SUDO_USER:$SUDO_USER .
 
 echo ""
 echo "========================================================="
-echo " INSTALACIÓN COMPLETADA"
+echo " INSTALACIOM COMPLETA"
 echo "Reinicia con 'sudo reboot'"
