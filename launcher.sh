@@ -16,7 +16,6 @@ while true; do
     ./build/retro-console > /dev/null 2>&1
 
     if [ -f /tmp/run_game.sh ]; then
-º
          cat /dev/zero > /dev/fb0 2>/dev/null
 
          /bin/bash /tmp/run_game.sh > /dev/null 2>&1
