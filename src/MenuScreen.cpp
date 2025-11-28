@@ -807,20 +807,7 @@ void MenuScreen::renderROMListVertical(SDL_Renderer* renderer, TextRenderer* tex
     int offsetX = 150;
     int controlY = SCREEN_HEIGHT - -150;
 
-    textRenderer->renderText(renderer, "[Flechas]", 40  + offsetX, controlY, TEXT_SECONDARY_COLOR);
-    textRenderer->renderText(renderer, "Navegar", 120 + offsetX, controlY, TEXT_COLOR);
-    textRenderer->renderText(renderer, "|", 240   + offsetX, controlY, TEXT_SECONDARY_COLOR);
-    textRenderer->renderText(renderer, "[Enter]", 280 + offsetX, controlY, TEXT_SECONDARY_COLOR);
-    textRenderer->renderText(renderer, "Jugar", 370 + offsetX, controlY, TEXT_COLOR);
-    textRenderer->renderText(renderer, "|", 450   + offsetX, controlY, TEXT_SECONDARY_COLOR);
-    textRenderer->renderText(renderer, "[F]", 470 + offsetX, controlY, TEXT_SECONDARY_COLOR);
-    textRenderer->renderText(renderer, "Favorito", 520 + offsetX, controlY, TEXT_COLOR);
-    textRenderer->renderText(renderer, "|", 620   + offsetX, controlY, TEXT_SECONDARY_COLOR);
-    textRenderer->renderText(renderer, "[C]", 640 + offsetX, controlY, TEXT_SECONDARY_COLOR);
-    textRenderer->renderText(renderer, "Continuar", 680 + offsetX, controlY, TEXT_COLOR);
-    textRenderer->renderText(renderer, "|", 800   + offsetX, controlY, TEXT_SECONDARY_COLOR);
-    textRenderer->renderText(renderer, "[R]", 820 + offsetX, controlY, TEXT_SECONDARY_COLOR);
-    textRenderer->renderText(renderer, "USB", 860 + offsetX, controlY, TEXT_COLOR);
+    textRenderer->renderText(renderer, "[Flechas] Navegar | [X] Jugar | [Triangulo] Favorito | [L1/R1] Cambiar menu | [Select] Cambiar consola", 5  + offsetX, controlY, TEXT_SECONDARY_COLOR);
 }
 
 ROM* MenuScreen::getSelectedROM() {
@@ -988,3 +975,4 @@ void MenuScreen::checkAndCopyUSBROMs(SDL_Renderer* renderer) {
 
     usbCheckInProgress = false;
 }
+
