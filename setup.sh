@@ -5,7 +5,19 @@
 
 
 PROJECT_DIR=$(pwd)
-USER_HOME=$(eval echo ~${SUDO_USER})
+REAL_USER=$SUDO_USER
+if [ -z "$REAL_USER" ]; then
+    REAL_USER=$(stat -c '%U' .)
+fi
+if [ -z "$REAL_USER" ]; then
+    REAL_USER="pi"
+fi
+
+USER_HOME="/home/$REAL_USER"
+
+echo ">>> Directorio del proyecto: $PROJECT_DIR"
+echo ">>> Usuario detectado: $REAL_USER"
+echo ">>> Home del usuario: $USER_HOME"
 CMDLINE_FILE="/boot/firmware/cmdline.txt"
 
 # Compatibilidad: Si no existe en firmware, buscar en /boot
@@ -89,53 +101,36 @@ else
     echo "   -> cmdline.txt actualizado correctamente."
 fi
 
-# 9. INSTALACIÓN DE BIOS (Si está presente)
+# 9. BIOS GBA
 echo ">>> [8/X] Verificando BIOS de GBA..."
 
-# Definir rutas
-MEDNAFEN_DIR="/home/$SUDO_USER/.mednafen"
-BIOS_FILE="gba_bios.bin"
+# Crear directorio de config si no existe (Usando la variable corregida)
+mkdir -p "$USER_HOME/.mednafen"
+chown $REAL_USER:$REAL_USER "$USER_HOME/.mednafen"
 
-# Asegurar que la carpeta de destino exista y tenga permisos
-mkdir -p "$MEDNAFEN_DIR"
-chown $SUDO_USER:$SUDO_USER "$MEDNAFEN_DIR"
-
-# Verificar si el archivo existe en la carpeta del proyecto
-if [ -f "$BIOS_FILE" ]; then
-    echo "   -> Archivo '$BIOS_FILE' encontrado. Instalando..."
-    
-    # Copiar el archivo
-    cp "$BIOS_FILE" "$MEDNAFEN_DIR/"
-    
-    # Ajustar permisos (Lectura para todos, Dueño: usuario pi)
-    chmod 644 "$MEDNAFEN_DIR/$BIOS_FILE"
-    chown $SUDO_USER:$SUDO_USER "$MEDNAFEN_DIR/$BIOS_FILE"
-    
-    echo "   -> BIOS instalada correctamente."
+# Buscar la BIOS en el proyecto o en USB
+if [ -f "gba_bios.bin" ]; then
+    cp gba_bios.bin "$USER_HOME/.mednafen/"
+    chmod 644 "$USER_HOME/.mednafen/gba_bios.bin"
+    chown $REAL_USER:$REAL_USER "$USER_HOME/.mednafen/gba_bios.bin"
+    echo "   -> BIOS instalada desde carpeta local."
 else
-    echo "   -> ADVERTENCIA: No se encontró '$BIOS_FILE' en esta carpeta."
-    echo "      Recuerda copiarlo manualmente a: $MEDNAFEN_DIR/"
+    echo "   AVISO: No se encontró 'gba_bios.bin' en la carpeta del proyecto."
+    echo "   Recuerda copiarla manualmente a $USER_HOME/.mednafen/"
 fi
 
-# ...
-
-# 9.CONFIGURACION DE EMULADOR - controles
-echo ">>> [8/8] Inyectando configuracion de controles (Mednafen)..."
-
-mkdir -p /home/$SUDO_USER/.mednafen
+# 10. CONFIGURACION DE EMULADOR - controles
+echo ">>> [9/9] Inyectando configuración de controles (Mednafen)..."
 
 if [ -f "config/mednafen.cfg" ]; then
-    cp config/mednafen.cfg /home/$SUDO_USER/.mednafen/mednafen.cfg
-
-    # Asegurar permisos para el usuario (no root)
-    chown -R $SUDO_USER:$SUDO_USER /home/$SUDO_USER/.mednafen
+    cp config/mednafen.cfg "$USER_HOME/.mednafen/mednafen.cfg"
+    chown $REAL_USER:$REAL_USER "$USER_HOME/.mednafen/mednafen.cfg"
     echo "   -> Configuración de controles instalada."
 else
     echo "   ADVERTENCIA: No se encontró config/mednafen.cfg"
 fi
 
-
-# 8. CREAR CARPETAS DE DATOS
+#CREAR CARPETAS DE DATOS
 #mkdir -p roms/nes roms/snes roms/gba data
 # Asegurar que el usuario sea dueño de todo
 
