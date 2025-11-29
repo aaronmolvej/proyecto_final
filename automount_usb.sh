@@ -12,7 +12,7 @@ while true; do
             echo "¡Dispositivo detectado! Intentando montar..."
 
             pmount "$DEVICE" "$LABEL"
-ó
+
             if [ $? -eq 0 ]; then
                 echo "--> ÉXITO: Montado en /media/$LABEL"
                 ls -l "/media/$LABEL"
@@ -21,8 +21,7 @@ while true; do
             fi
         fi
     else
-        # echo "Esperando USB..." 
-
+        # echo "Esperando USB..."
         if mountpoint -q "/media/$LABEL"; then
             echo "USB desconectada. Limpiando..."
             pumount "$LABEL"

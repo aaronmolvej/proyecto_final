@@ -119,7 +119,7 @@ fi
 
 # ...
 
-# 9.CONFIGURACION DE EMULADOR (GOLDEN MASTER)
+# 9.CONFIGURACION DE EMULADOR - controles
 echo ">>> [8/8] Inyectando configuracion de controles (Mednafen)..."
 
 mkdir -p /home/$SUDO_USER/.mednafen
@@ -138,6 +138,7 @@ fi
 # 8. CREAR CARPETAS DE DATOS
 #mkdir -p roms/nes roms/snes roms/gba data
 # Asegurar que el usuario sea dueño de todo
+
 sudo chown -R $SUDO_USER:$SUDO_USER .
 
 echo ""
